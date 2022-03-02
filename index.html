@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+    <title>やっほ</title>
+  </head>
+  <body>
+    <h2>おさんぽ</h2>
+    <div id="app">
+      <button v-on:click="reverseMessage">ぽちっとな</button>
+      <section v-if="is_error">
+        <p>ふえーん</p>
+      </section>
+      <section v-else>
+        <p>{{ message }}</p>
+      </section>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: '',
+          is_error: false,
+        },
+        methods: {
+          reverseMessage: function () {
+               axios.get('https://uzawwrv70j.execute-api.ap-northeast-1.amazonaws.com/asobi1production/asobi1')
+                 .then(response => this.message = '今日は ' + response.data + ' に行こうね')
+                 .catch(error => {
+                    console.log(error)
+                    this.is_error = true
+                 })
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
